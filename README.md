@@ -150,6 +150,7 @@ Output:
 data/gold/events_per_minute/
 ```
 
+```
 === Events per minute example===
 +-------------------+-------------------+-----------+
 |minute_start       |minute_end         |event_count|
@@ -175,7 +176,7 @@ data/gold/events_per_minute/
 |2026-02-02 17:30:00|2026-02-02 17:31:00|167        |
 |2026-02-02 17:39:00|2026-02-02 17:40:00|169        |
 +-------------------+-------------------+-----------+
-
+```
 ---
 
 ### 💳 Revenue per Time Window
@@ -191,7 +192,7 @@ Output:
 ```
 data/gold/revenue_per_hour/
 ```
-
+```
 === Revenue per window example ===
 +-------------------+-------------------+-------+
 |minute_start       |minute_end         |revenue|
@@ -201,7 +202,7 @@ data/gold/revenue_per_hour/
 |2026-02-02 17:35:00|2026-02-02 17:40:00|3386.45|
 |2026-02-02 17:40:00|2026-02-02 17:45:00|3454.81|
 +-------------------+-------------------+-------+
-
+```
 ---
 
 ### 👥 Active Users per Time Window
@@ -217,7 +218,7 @@ Output:
 ```
 data/gold/active_users_per_hour/
 ```
-
+```
 === Active users per window example ===
 +-------------------+-------------------+------------+                          
 |minute_start       |minute_end         |active_users|
@@ -227,7 +228,7 @@ data/gold/active_users_per_hour/
 |2026-02-02 17:35:00|2026-02-02 17:40:00|884         |
 |2026-02-02 17:40:00|2026-02-02 17:45:00|932         |
 +-------------------+-------------------+------------+
-
+```
 ---
 
 ### 📱 Purchases per Device
@@ -243,7 +244,7 @@ Output:
 ```
 data/gold/most_purchases_per_device/
 ```
-
+```
 === Most purchases per device example ===
 +-------------------+-------------------+-----------+------------------+--------------+
 |minute_start       |minute_end         |device_type|revenue_per_device|purchase_count|
@@ -265,7 +266,7 @@ data/gold/most_purchases_per_device/
 |2026-02-02 17:25:00|2026-02-02 17:30:00|mobile     |399.73            |9             |
 |2026-02-02 17:40:00|2026-02-02 17:45:00|desktop    |1114.85           |19            |
 +-------------------+-------------------+-----------+------------------+--------------+
-
+```
 ---
 
 ## ▶️ Recommended Run Order (Demo Mode)
