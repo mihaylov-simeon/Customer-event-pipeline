@@ -1,0 +1,43 @@
+############################
+# Python
+############################
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Virtual environments
+.venv/
+venv/
+.env
+
+############################
+# Spark / Big Data
+############################
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Spark streaming state / metadata
+_checkpoint/
+_checkpoints/
+_spark_metadata/
+.sparkStaging/
+
+############################
+# Generated data (keep structure, ignore contents)
+############################
+data/**
+!data/.gitkeep
+!data/inbox/.gitkeep
+!data/bronze/.gitkeep
+!data/silver/.gitkeep
+!data/gold/.gitkeep
+
+############################
+# OS / IDE
+############################
+.DS_Store
+.idea/
+.vscode/
