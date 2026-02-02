@@ -1,12 +1,3 @@
-import sys
-from pathlib import Path
-
-# Project root fixer
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-    
 from src.common.spark_session import spark_session
 from src.common.paths import (
     ACTIVE_USERS,
@@ -16,7 +7,7 @@ from src.common.paths import (
 )
 
 def main():
-    spark = spark_session("silver_event_transformation")
+    spark = spark_session("read_gold")
 
     spark.sparkContext.setLogLevel("WARN")
 

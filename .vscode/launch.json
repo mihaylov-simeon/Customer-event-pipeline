@@ -1,0 +1,82 @@
+{
+  "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "Pipeline (generate + bronze + silver)",
+      "configurations": [
+        "Generate events",
+        "Bronze ingestion",
+        "Silver transformation"
+      ],
+      "stopAll": true
+    },
+    {
+      "name": "Pipeline (all gold jobs)",
+      "configurations": [
+        "Gold active users per window",
+        "Gold events per minute",
+        "Gold most purchases per device",
+        "Gold revenue per window"
+      ],
+      "stopAll": true
+    }
+  ],
+  "configurations": [
+    {
+      "name": "Bronze ingestion",
+      "type": "python",
+      "request": "launch",
+      "module": "src.bronze.bronze_ingestion",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Silver transformation",
+      "type": "python",
+      "request": "launch",
+      "module": "src.silver.silver_transformation",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Generate events",
+      "type": "python",
+      "request": "launch",
+      "module": "src.utils.generate_events",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Read gold",
+      "type": "python",
+      "request": "launch",
+      "module": "src.utils.read_gold",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Gold active users per window",
+      "type": "python",
+      "request": "launch",
+      "module": "src.gold.gold_active_users_per_window",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Gold events per minute",
+      "type": "python",
+      "request": "launch",
+      "module": "src.gold.gold_events_per_minute",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Gold most purchases per device",
+      "type": "python",
+      "request": "launch",
+      "module": "src.gold.gold_most_purchases_per_device",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Gold revenue per window",
+      "type": "python",
+      "request": "launch",
+      "module": "src.gold.gold_revenue_per_window",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
