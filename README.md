@@ -29,17 +29,19 @@ portfolio-project-2/
 │   │   └── gold_most_purchases_per_device.py
 │   ├── common/
 │   │   ├── schema.py
-│   │   └── spark_session.py
+│   │   ├── spark_session.py
+│   │   └── paths.py
 │   └── utils/
+│       ├── generate_events.py
 │       └── read_gold.py
 │
-├── generate_events.py
-├── data/                  # ignored by git
+├── data/                  # folders tracked, contents ignored
 │   ├── inbox/
 │   ├── bronze/
 │   ├── silver/
 │   └── gold/
 │
+├── .env.example
 ├── .gitignore
 ├── README.md
 └── .venv/
@@ -76,7 +78,7 @@ Simulates real-time user activity by continuously writing JSON files.
 
 Run:
 ```bash
-python generate_events.py
+python -m src.utils.generate_events
 ```
 
 Output:
@@ -98,7 +100,7 @@ data/inbox/
 
 Run:
 ```bash
-python src/bronze/bronze_ingestion.py
+python -m src.bronze.bronze_ingestion
 ```
 
 Output:
@@ -120,7 +122,7 @@ data/bronze/events/
 
 Run:
 ```bash
-python src/silver/silver_transformation.py
+python -m src.silver.silver_transformation
 ```
 
 Output:
@@ -142,7 +144,7 @@ Counts total events per minute.
 
 Run:
 ```bash
-python src/gold/gold_events_per_minute.py
+python -m src.gold.gold_events_per_minute
 ```
 
 Output:
@@ -185,12 +187,12 @@ Sums purchase revenue per window.
 
 Run:
 ```bash
-python src/gold/gold_revenue_per_window.py
+python -m src.gold.gold_revenue_per_window
 ```
 
 Output:
 ```
-data/gold/revenue_per_hour/
+data/gold/revenue_per_window/
 ```
 ```
 === Revenue per window example ===
@@ -211,12 +213,12 @@ Counts approximate distinct users per window using a streaming-safe aggregation.
 
 Run:
 ```bash
-python src/gold/gold_active_users_per_window.py
+python -m src.gold.gold_active_users_per_window
 ```
 
 Output:
 ```
-data/gold/active_users_per_hour/
+data/gold/active_users_per_window/
 ```
 ```
 === Active users per window example ===
@@ -237,7 +239,7 @@ Aggregates revenue and purchase count by device type per window.
 
 Run:
 ```bash
-python src/gold/gold_most_purchases_per_device.py
+python -m src.gold.gold_most_purchases_per_device
 ```
 
 Output:
@@ -275,19 +277,19 @@ Open **multiple terminals**:
 
 ```bash
 # 1️⃣ Generate events
-python generate_events.py
+python -m src.utils.generate_events
 
 # 2️⃣ Bronze ingestion
-python src/bronze/bronze_ingestion.py
+python -m src.bronze.bronze_ingestion
 
 # 3️⃣ Silver transformation
-python src/silver/silver_transformation.py
+python -m src.silver.silver_transformation
 
 # 4️⃣ Gold pipelines (each in its own terminal)
-python src/gold/gold_events_per_minute.py
-python src/gold/gold_revenue_per_window.py
-python src/gold/gold_active_users_per_window.py
-python src/gold/gold_most_purchases_per_device.py
+python -m src.gold.gold_events_per_minute
+python -m src.gold.gold_revenue_per_window
+python -m src.gold.gold_active_users_per_window
+python -m src.gold.gold_most_purchases_per_device
 ```
 
 Let everything run for **10–15 minutes**.
@@ -302,15 +304,15 @@ Reads all Gold datasets and prints them.
 
 Run:
 ```bash
-python src/utils/read_gold.py
+python -m src.utils.read_gold
 ```
 
 Example output:
 ```
-=== Active users per hour ===
+=== Active users per window ===
 | minute_start | minute_end | active_users |
 
-=== Revenue per hour ===
+=== Revenue per window ===
 | minute_start | minute_end | revenue |
 
 === Most purchases per device ===
