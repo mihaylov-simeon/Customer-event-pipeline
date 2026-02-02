@@ -8,7 +8,6 @@ This project is designed to be:
 - ✅ Replayable
 - ✅ Fault-tolerant
 - ✅ Streaming-first
-- ✅ Portfolio / interview ready
 
 ---
 
@@ -16,7 +15,13 @@ This project is designed to be:
 
 ```
 portfolio-project-2/
-│
+├── .venv
+├── .vscode
+├── data
+│   ├── inbox/
+│   ├── bronze/
+│   ├── silver/
+│   └── gold/
 ├── src/
 │   ├── bronze/
 │   │   └── bronze_ingestion.py
@@ -35,16 +40,9 @@ portfolio-project-2/
 │       ├── generate_events.py
 │       └── read_gold.py
 │
-├── data/                  # folders tracked, contents ignored
-│   ├── inbox/
-│   ├── bronze/
-│   ├── silver/
-│   └── gold/
-│
 ├── .env.example
 ├── .gitignore
 ├── README.md
-└── .venv/
 ```
 
 ---
@@ -94,9 +92,9 @@ data/inbox/
 
 **Purpose**
 - Read JSON files as a stream
-- Enforce schema
-- Persist raw events in Parquet
-- Track processed files using checkpoints
+- Enforce a predefined schema
+- Persist raw events in Parquet format
+- Track processed files using streaming checkpoints
 
 Run:
 ```bash
@@ -115,10 +113,10 @@ data/bronze/events/
 ### `silver_transformation.py`
 
 **Purpose**
-- Read Bronze Parquet as a stream
+- Read Bronze Parquet data as a stream
+- Apply 10-minute event-time watermark to handle late-arriving data safely
 - Deduplicate events by `event_id`
-- Apply event-time watermark
-- Produce trusted, clean data
+- Produce trusted, clean "silver" dataset
 
 Run:
 ```bash
@@ -134,13 +132,13 @@ data/silver/events/
 
 ## 🥇 Gold Layer – Business Metrics
 
-Each Gold pipeline is **independent**, **streaming**, and writes to its own folder.
+Each Gold pipeline is **independent**, **stateful** and **streaming**, and writes to its own folder.
 
 ---
 
 ### ⏱ Events per Minute
 
-Counts total events per minute.
+Counts total events per 1-minute event-time window.
 
 Run:
 ```bash
@@ -153,7 +151,7 @@ data/gold/events_per_minute/
 ```
 
 ```
-=== Events per minute example===
+=== Events per minute example output ===
 +-------------------+-------------------+-----------+
 |minute_start       |minute_end         |event_count|
 +-------------------+-------------------+-----------+
@@ -183,7 +181,7 @@ data/gold/events_per_minute/
 
 ### 💳 Revenue per Time Window
 
-Sums purchase revenue per window.
+Aggregates total purchase revenue per event-time window.
 
 Run:
 ```bash
@@ -195,7 +193,7 @@ Output:
 data/gold/revenue_per_window/
 ```
 ```
-=== Revenue per window example ===
+=== Revenue per window example output ===
 +-------------------+-------------------+-------+
 |minute_start       |minute_end         |revenue|
 +-------------------+-------------------+-------+
@@ -209,7 +207,7 @@ data/gold/revenue_per_window/
 
 ### 👥 Active Users per Time Window
 
-Counts approximate distinct users per window using a streaming-safe aggregation.
+Counts approximate distinct active users per window using a streaming-safe aggregation.
 
 Run:
 ```bash
@@ -221,7 +219,7 @@ Output:
 data/gold/active_users_per_window/
 ```
 ```
-=== Active users per window example ===
+=== Active users per window example output ===
 +-------------------+-------------------+------------+                          
 |minute_start       |minute_end         |active_users|
 +-------------------+-------------------+------------+
@@ -247,7 +245,7 @@ Output:
 data/gold/most_purchases_per_device/
 ```
 ```
-=== Most purchases per device example ===
+=== Most purchases per device example output ===
 +-------------------+-------------------+-----------+------------------+--------------+
 |minute_start       |minute_end         |device_type|revenue_per_device|purchase_count|
 +-------------------+-------------------+-----------+------------------+--------------+
@@ -307,21 +305,6 @@ Run:
 python -m src.utils.read_gold
 ```
 
-Example output:
-```
-=== Active users per window ===
-| minute_start | minute_end | active_users |
-
-=== Revenue per window ===
-| minute_start | minute_end | revenue |
-
-=== Most purchases per device ===
-| device_type | revenue_per_device | purchase_count |
-
-=== Events per minute ===
-| minute_start | minute_end | event_count |
-```
-
 ---
 
 ## 🧠 Key Concepts Demonstrated
@@ -338,19 +321,16 @@ Example output:
 
 ---
 
-## 🚀 Why This Project Matters
-
-This is **not a toy project**.
-
 The same design works with:
-- Kafka instead of JSON
-- S3 instead of local storage
-- Airflow instead of manual execution
+- **Kafka** instead of **JSON**
+- **S3** instead of **local storage**
+- **Airflow DAG** instead of **manual execution**
 
-It demonstrates **real-world data engineering patterns** used in production streaming systems.
+The main goal is to demonstrate **real-world data engineering patterns** used in production streaming systems.
 
 ---
 
 ## 👤 Author
 
+SMCODELAB [Simeon Mihaylov]
 Built as a **Data Engineering project** to showcase real-time analytics using PySpark Structured Streaming.
